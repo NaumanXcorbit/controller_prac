@@ -1,0 +1,22 @@
+<h3>New Client</h3>
+
+<%= form_with(model: @client) do |form| %>
+  <div>
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.label :about %>
+    <%= form.text_area :about %>
+  </div>
+
+  <div>
+    <%= form.label :address %>
+    <%= form.text_area :address %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
