@@ -1,4 +1,14 @@
 class ClientsController < ApplicationController
+  force_ssl
+  # http_basic_authenticate_with name: "admin", password: "1122"
+
+  # before_action :authenticate
+  def download_pdf
+    client = Client.find(params[:id])
+    send_file("#{Rails.root}/files/clients/#{client.id}.pdf",
+              filename: "#{client.name}.pdf",
+              type: "application/pdf")
+  end
   def index
     @clients = Client.all
     respond_to do |format|
@@ -23,6 +33,10 @@ class ClientsController < ApplicationController
   end
 
   private
+  def authenticate
+    authenticate_or_request_with_http_digest name: "admin", password: "1122"
+  end
+
   def client_params
     params.require(:client).permit(:name,
                                    :about,
