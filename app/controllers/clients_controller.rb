@@ -1,5 +1,11 @@
 class ClientsController < ApplicationController
   def index
+    @clients = Client.all
+    respond_to do |format|
+      format.html
+      format.xml {render xml: @clients}
+      format.json {render json: @clients}
+    end
   end
   def new
     @client = Client.new
@@ -18,6 +24,13 @@ class ClientsController < ApplicationController
 
   private
   def client_params
-    params.require(:client).permit(:name, :about, :address)
+    params.require(:client).permit(:name,
+                                   :about,
+                                   :address,
+                                   projects_attributes: [:name,
+                                                         :about,
+                                                         :price,
+                                                         reviews_attributes: [:title,
+                                                                              :description]])
   end
 end
